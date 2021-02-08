@@ -60,6 +60,13 @@
             <version>4.0.1</version>
             <scope>provided</scope>
         </dependency>
+
+        <!--"http://java.sun.com/jsp/jstl/core"-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
     </dependencies>
 
     <profiles>
