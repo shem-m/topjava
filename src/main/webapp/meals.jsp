@@ -1,5 +1,3 @@
-<%@ page import="ru.javawebinar.topjava.web.MealServlet" %>
-<%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -7,14 +5,15 @@
 <head>
     <title>Meals</title>
 </head>
-<body>
+
 <h3><a href="index.html">Home</a></h3>
 <hr>
 <h2>Meals</h2>
-
-<table border="1" cellpadding="5">
+<body>
+<table border="1">
     <thead>
     <tr>
+        <th>Id</th>
         <th>Date</th>
         <th>Description</th>
         <th>Calories</th>
@@ -25,18 +24,20 @@
     <tbody>
     <c:forEach items="${requestScope.meals}" var="meal">
         <tr style="color:${meal.excess ? 'red' : 'green'}">
+            <td><c:out value="${meal.id}"/></td>
             <td><c:out value="${meal.formattedDateTime}"/></td>
             <td><c:out value="${meal.description}"/></td>
             <td><c:out value="${meal.calories}"/></td>
             <td>
-                <button type="button" onclick="">Update</button>
+                <a href="meals?action=edit&id=<c:out value="${meal.id}"/>">Update</a>
             </td>
             <td>
-                <button type="button" onclick="">Delete</button>
+                <a href="meals?action=delete&id=<c:out value="${meal.id}"/>">Delete</a>
             </td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
+<p><a href="meals?action=insert">Add meal</a></p>
 </body>
 </html>

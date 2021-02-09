@@ -9,9 +9,11 @@ public interface MealsDAO {
 
     List<Meal> getAll();
 
-    Meal getById();
+    Meal getById(Integer id);
 
-    void save(Meal meal);
+    void add(Meal meal);
 
-    void delete(Long id);
+    void update(Meal meal);
+
+    void delete(Integer id);
 }
