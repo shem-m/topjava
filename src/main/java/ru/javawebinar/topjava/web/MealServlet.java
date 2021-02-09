@@ -23,8 +23,8 @@ public class MealServlet extends HttpServlet {
     private final MealsDAO mealsDAO = new MealsDAOImpl();
     private final List<Meal> meals = mealsDAO.getAll();
     private static final int CALORIES_PER_DAY = 2000;
-    private static String ADD_OR_UPDATE = "/mealForm.jsp";
-    private static String MEALS = "/meals.jsp";
+    private static final String ADD_OR_UPDATE = "/mealForm.jsp";
+    private static final String MEALS = "/meals.jsp";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
