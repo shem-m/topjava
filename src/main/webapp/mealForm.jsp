@@ -9,14 +9,16 @@
 <h3><a href="index.html">Home</a></h3>
 <hr>
 <h2>Edit meal</h2>
-<jsp:useBean id="meal" scope="request"  type="ru.javawebinar.topjava.model.Meal"/>
+<jsp:useBean id="meal" scope="request" type="ru.javawebinar.topjava.model.Meal"/>
 
-<form method="post" <%--action="meals?action=edit"--%>>
+<form method="post">
     <input type="hidden" name="Id" value="${meal.id}">
     DateTime: <input type="datetime-local" name="dateTime" value="${meal.dateTime}" required/> <br/>
     Description: <input type="text" name="description" value="${meal.description}" required/> <br/>
     Calories: <input type="number" name="calories" value="${meal.calories}" required/> <br/>
+    <p>
     <input type="submit" value="Submit"/>
+    <button type="button" onclick="window.history.back();">Cancel</button>
 </form>
 </body>
 </html>

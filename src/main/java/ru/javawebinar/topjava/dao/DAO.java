@@ -5,7 +5,7 @@ import ru.javawebinar.topjava.model.MealTo;
 
 import java.util.List;
 
-public interface MealsDAO {
+public interface DAO {
 
     List<Meal> getAll();
 

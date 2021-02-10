@@ -1,8 +1,8 @@
 package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
-import ru.javawebinar.topjava.dao.MealsDAO;
-import ru.javawebinar.topjava.dao.MealsDAOImpl;
+import ru.javawebinar.topjava.dao.DAO;
+import ru.javawebinar.topjava.dao.MealDAO;
 import ru.javawebinar.topjava.model.Meal;
 
 import javax.servlet.RequestDispatcher;
@@ -20,8 +20,8 @@ import static ru.javawebinar.topjava.util.MealsUtil.filteredByStreams;
 
 public class MealServlet extends HttpServlet {
     private static final Logger log = getLogger(UserServlet.class);
-    private final MealsDAO mealsDAO = new MealsDAOImpl();
-    private final List<Meal> meals = mealsDAO.getAll();
+    private final DAO mealDAO = new MealDAO();
+    private final List<Meal> meals = mealDAO.getAll();
     private static final int CALORIES_PER_DAY = 2000;
     private static final String ADD_OR_UPDATE = "/mealForm.jsp";
     private static final String MEALS = "/meals.jsp";
@@ -30,34 +30,27 @@ public class MealServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.debug("redirect to meals");
 
-        String forward = "";
         String action = request.getParameter("action");
 
-        if (action.equalsIgnoreCase("delete")) {
-            int id = Integer.parseInt(request.getParameter("id"));
-            mealsDAO.delete(id);
-            forward = MEALS;
+        if (action == null) {
             request.setAttribute("meals", filteredByStreams(meals, LocalTime.MIN, LocalTime.MAX, CALORIES_PER_DAY));
+            request.getRequestDispatcher(MEALS).forward(request, response);
+        } else if (action.equalsIgnoreCase("delete")) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            mealDAO.delete(id);
+            response.sendRedirect("meals");
         } else if (action.equalsIgnoreCase("edit")) {
-            forward = ADD_OR_UPDATE;
             int id = Integer.parseInt(request.getParameter("id"));
-            Meal meal = mealsDAO.getById(id);
+            Meal meal = mealDAO.getById(id);
             request.setAttribute("meal", meal);
-        } else if (action.equalsIgnoreCase("meals")) {
-            forward = MEALS;
-            request.setAttribute("meals", filteredByStreams(meals, LocalTime.MIN, LocalTime.MAX, CALORIES_PER_DAY));
+            request.getRequestDispatcher(ADD_OR_UPDATE).forward(request, response);
         } else if (action.equalsIgnoreCase("insert")) {
-            forward = ADD_OR_UPDATE;
             Meal meal = new Meal(LocalDateTime.now(), "", 0);
             request.setAttribute("meal", meal);
+            request.getRequestDispatcher(ADD_OR_UPDATE).forward(request, response);
+        } else {
+            response.sendRedirect("meals");
         }
-
-
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher(forward);
-        requestDispatcher.forward(request, response);
-
-//        request.setAttribute("meals", filteredByStreams(meals, LocalTime.MIN, LocalTime.MAX, CALORIES_PER_DAY));
-//        request.getRequestDispatcher("/meals.jsp").forward(request, response);
     }
 
     @Override
@@ -73,13 +66,14 @@ public class MealServlet extends HttpServlet {
 
         String id = request.getParameter("id");
         if (id == null || id.isEmpty()) {
-            mealsDAO.add(meal);
+            mealDAO.add(meal);
         } else {
             meal.setId(Integer.parseInt(id));
-            mealsDAO.update(meal);
+            mealDAO.update(meal);
         }
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher(MEALS);
-        request.setAttribute("meals", filteredByStreams(meals, LocalTime.MIN, LocalTime.MAX, CALORIES_PER_DAY));
-        requestDispatcher.forward(request, response);
+
+        response.sendRedirect("meals");
+//        request.setAttribute("meals", filteredByStreams(meals, LocalTime.MIN, LocalTime.MAX, CALORIES_PER_DAY));
+//        request.getRequestDispatcher(MEALS).forward(request, response);
     }
 }
