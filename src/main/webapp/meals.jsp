@@ -20,7 +20,51 @@
 <section>
     <h3><a href="index.html">Home</a></h3>
     <hr/>
+
     <h2>Meals</h2>
+    <%--<style>
+        dl {
+            background: none repeat scroll 0 0 #FAFAFA;
+            margin: 8px 0;
+            padding: 0;
+        }
+
+        dt {
+            display: inline-block;
+            width: 170px;
+        }
+
+        dd {
+            display: inline-block;
+            margin-left: 8px;
+            vertical-align: top;
+        }
+    </style>--%>
+    <form method="post" action="meals?action=filter">
+
+        From date:
+        <label>
+            <input type="date" name="startDate" value="${param.startDate}">
+        </label>
+
+        To date:
+        <label>
+            <input type="date" name="endDate" value="${param.endDate}">
+        </label><br>
+
+        From time:
+        <label>
+            <input type="time" name="startTime" value="${param.startTime}">
+        </label>
+
+        To time:
+        <label>
+            <input type="time" name="endTime" value="${param.endTime}">
+        </label>
+
+        <button type="submit">Search</button>
+    </form>
+
     <a href="meals?action=create">Add Meal</a>
     <br><br>
     <table border="1" cellpadding="8" cellspacing="0">
@@ -34,7 +78,7 @@
         </tr>
         </thead>
         <c:forEach items="${meals}" var="meal">
-            <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.MealTo"/>
+            <jsp:useBean id="meal" type="ru.javawebinar.topjava.to.MealTo"/>
             <tr class="${meal.excess ? 'excess' : 'normal'}">
                 <td>
                         <%--${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}--%>
