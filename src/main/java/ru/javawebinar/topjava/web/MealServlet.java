@@ -23,14 +23,11 @@ import static ru.javawebinar.topjava.web.SecurityUtil.authUserId;
 public class MealServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(MealServlet.class);
 
-//    private MealRepository repository;
-
     private ConfigurableApplicationContext appCtx;
     private MealRestController mealRestController;
 
     @Override
     public void init() {
-//        repository = new InMemoryMealRepository();
         appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml");
         mealRestController = appCtx.getBean(MealRestController.class);
     }
@@ -41,10 +38,29 @@ public class MealServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         if ("filter".equals(request.getParameter("action"))) {
-            LocalDate startDate = LocalDate.parse(request.getParameter("startDate"));
-            LocalDate endDate = LocalDate.parse(request.getParameter("endDate"));
-            LocalTime startTime = LocalTime.parse(request.getParameter("startTime"));
-            LocalTime endTime = LocalTime.parse(request.getParameter("endTime"));
+            String startDateStr = request.getParameter("startDate");
+            String endDateStr = request.getParameter("endDate");
+            String startTimeStr = request.getParameter("startTime");
+            String endTimeStr = request.getParameter("endTime");
+
+            LocalDate startDate = LocalDate.MIN;
+            LocalDate endDate = LocalDate.MAX;
+            LocalTime startTime = LocalTime.MIN;
+            LocalTime endTime = LocalTime.MAX;
+
+            if (startDateStr != null && !startDateStr.isEmpty()) {
+                startDate = LocalDate.parse(startDateStr);
+            }
+            if (endDateStr != null && !endDateStr.isEmpty()) {
+                endDate = LocalDate.parse(endDateStr);
+            }
+            if (startTimeStr != null && !startTimeStr.isEmpty()) {
+                startTime = LocalTime.parse(startTimeStr);
+            }
+            if (endTimeStr != null && !endTimeStr.isEmpty()) {
+                endTime = LocalTime.parse(endTimeStr);
+            }
+
             request.setAttribute("meals", mealRestController.getAllByDateTime(startDate, endDate, startTime, endTime));
             request.getRequestDispatcher("/meals.jsp").forward(request, response);
         } else if (action == null) {
