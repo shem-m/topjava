@@ -25,7 +25,7 @@ public class MealTestData {
     public static final Meal meal4 = new Meal(START_SEQ + 5, LocalDateTime.of(2020, 1, 31, 0, 0, 0), "Еда на граничное значение", 100);
 
     public static Meal getNew() {
-        return new Meal(null, LocalDateTime.now(), "newMeal", 410);
+        return new Meal(null, LocalDateTime.of(2020, 1, 30, 15, 0, 0), "newMeal", 410);
     }
 
     public static Meal getUpdated() {
@@ -37,7 +37,7 @@ public class MealTestData {
     }
 
     public static void assertMatch(Meal actual, Meal expected) {
-        assertThat(actual).usingRecursiveComparison().ignoringFields("dateTime").isEqualTo(expected);
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
     }
 
     public static void assertMatch(Iterable<Meal> actual, Meal... expected) {
@@ -45,7 +45,7 @@ public class MealTestData {
     }
 
     public static void assertMatch(Iterable<Meal> actual, Iterable<Meal> expected) {
-        assertThat(actual).usingElementComparatorIgnoringFields("dateTime").isEqualTo(expected);
+        assertThat(actual).usingElementComparatorIgnoringFields().isEqualTo(expected);
     }
 
 }
