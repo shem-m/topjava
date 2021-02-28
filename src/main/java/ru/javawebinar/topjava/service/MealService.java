@@ -26,11 +26,7 @@ public class MealService {
     }
 
     public Meal get(int id, int userId) {
-        try {
-            return checkNotFoundWithId(repository.get(id, userId), id);
-        } catch (NoResultException e) {
-            throw new NotFoundException("Not found entity with id " + id);
-        }
+        return checkNotFoundWithId(repository.get(id, userId), id);
     }
 
     public void delete(int id, int userId) {
