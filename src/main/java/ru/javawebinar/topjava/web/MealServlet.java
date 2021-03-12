@@ -1,7 +1,5 @@
 package ru.javawebinar.topjava.web;
 
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.AbstractXmlApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.util.StringUtils;
@@ -26,6 +24,7 @@ import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalTime;
 public class MealServlet extends HttpServlet {
 
     private AbstractXmlApplicationContext springContext;
+
     private MealRestController mealController;
 
     @Override
