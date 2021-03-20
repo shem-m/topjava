@@ -24,4 +24,8 @@ public class Profiles {
             throw new IllegalStateException("Could not find DB driver");
         }
     }
+
+    public static boolean isJdbcProfileActive() {
+        return REPOSITORY_IMPLEMENTATION==JDBC;
+    }
 }
