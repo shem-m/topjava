@@ -2,16 +2,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://topjava.javawebinar.ru/functions" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <html>
-<head>
+<jsp:include page="fragments/headTag.jsp"/>
+<body>
+<jsp:include page="fragments/bodyHeader.jsp"/>
+<%--<head>
     <title>Meals</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
-</head>
-<body>
+</head>--%>
 <section>
-    <h3><a href="index.jsp">Home</a></h3>
     <hr/>
-    <h2>Meals</h2>
+    <h3><spring:message code="meal.title"/></h3>
     <form method="get" action="meals/filter">
         <dl>
             <dt>From Date (inclusive):</dt>

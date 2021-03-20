@@ -1,17 +1,24 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 
 <html>
-<head>
+<jsp:include page="fragments/headTag.jsp"/>
+<body>
+<jsp:include page="fragments/bodyHeader.jsp"/>
+<%--<head>
     <title>Meal</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
-</head>
-<body>
+</head>--%>
 <section>
-    <h3><a href="index.html">Home</a></h3>
-    <hr>
-    <h2>${param.action == 'create' ? 'Create meal' : 'Edit meal'}</h2>
     <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.Meal" scope="request"/>
+
+    <h3><spring:message code="${meal.isNew() ? 'meal.add' : 'meal.edit'}"/></h3>
+    <hr>
+<%--
+    <h2>${param.action == 'create' ? 'Create meal' : 'Edit meal'}</h2>
+--%>
     <form method="post" action="">
         <input type="hidden" name="id" value="${meal.id}">
         <dl>
